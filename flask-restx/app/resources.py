@@ -3,20 +3,11 @@ from flask_jwt_extended import jwt_required, get_jwt_identity,create_access_toke
 from werkzeug.security import generate_password_hash, check_password_hash
 from app import db
 from .api_models import course_model, student_model, course_input_model, student_input_model, login_model, user_model
-from .models import Course, Student, User
+from .models import Course, Student, User, generate_salt
 
-authorizations = {
-    "jsonWebToken": {
-        "type": "apiKey",
-        "in": "header",
-        "name": "Authorization"
-    }
-}
 
 # 類似 blueprint 設一個 url_prefix = "/api" 的意思
-nspace = Namespace("api", authorizations=authorizations)
-
-
+nspace = Namespace("api")
 
 @nspace.route("/hello")
 class Hello(Resource): # 繼承 Resource class
@@ -113,7 +104,8 @@ class Register(Resource):
     @nspace.expect(login_model)
     @nspace.marshal_with(user_model)
     def post(self):
-        user = User(username=nspace.payload["username"], password_hash=generate_password_hash(nspace.payload["password"]))
+        salt = generate_salt()
+        user = User(username=nspace.payload["username"], password_hash=generate_password_hash(nspace.payload["password"] + salt), salt=salt)
         db.session.add(user)
         db.session.commit()
         return user, 201
@@ -126,7 +118,9 @@ class Login(Resource):
         user = User.query.filter_by(username=nspace.payload["username"]).first()
         if not user:
             return {"error": "User does not exist"}, 401
-        if not check_password_hash(user.password_hash, nspace.payload["password"]):
+        if not check_password_hash(user.password_hash, nspace.payload["password"] + user.salt):
             return {"error": "Incorrect password"}, 401
-        return {"access_token": create_access_token(user.username)}
+        user_data = {"username": user.username, "content_id": 1}
+        access_token = create_access_token(identity=user.id, additional_claims = user_data)
+        return {"access_token": access_token}
     

@@ -1,10 +1,11 @@
 from .extensions import db 
+import secrets
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), unique=True)
     password_hash = db.Column(db.String(100))
-
+    salt = db.Column(db.String(200))
     courses = db.relationship("Course", back_populates="instructor")
 
 
@@ -25,3 +26,6 @@ class Student(db.Model):
 
     course = db.relationship("Course", back_populates="students")
     # 使用 back_populates 將兩者關連，主副表必須相互關聯
+
+def generate_salt():
+    return secrets.token_hex(16)

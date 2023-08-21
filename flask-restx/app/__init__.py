@@ -4,8 +4,8 @@ from .extensions import api, db, jwt
 from .resources import nspace
 
 def create_app():
-    app = Flask(__name__)
-
+    application = Flask(__name__)
+    app = application
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db.sqlite3"
     app.config["JWT_SECRET_KEY"] = "this secret key"
 
