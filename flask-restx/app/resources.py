@@ -1,5 +1,5 @@
 from flask_restx import Resource, Namespace
-from flask_jwt_extended import jwt_required, get_jwt_identity,create_access_token
+from flask_jwt_extended import jwt_required, get_jwt_identity,create_access_token, current_user, get_jwt
 from werkzeug.security import generate_password_hash, check_password_hash
 from app import db
 from .api_models import course_model, student_model, course_input_model, student_input_model, login_model, user_model
@@ -8,6 +8,15 @@ from .models import Course, Student, User, generate_salt
 
 # 類似 blueprint 設一個 url_prefix = "/api" 的意思
 nspace = Namespace("api")
+
+@nspace.route("/test")
+class test(Resource):
+    def get(self):
+        return {"member":[
+            "mamber1",
+            "member2",
+            "member3"
+        ]}, 403
 
 @nspace.route("/hello")
 class Hello(Resource): # 繼承 Resource class
@@ -25,7 +34,11 @@ class CourseListAPI(Resource):
     # 將 marshall_list_with裝飾器下的函數的 return 值給經過 course_model 轉化為 json 格式
     # ! marshal 非 marshall
     def get(self):
+        data = get_jwt()
+        
+        print("payload：",data["username"])
         return Course.query.all()
+        # return Course.query.filter_by(instructor=current_user).all()
     
     @nspace.marshal_with(course_model)
     @nspace.expect(course_input_model) 
@@ -120,7 +133,7 @@ class Login(Resource):
             return {"error": "User does not exist"}, 401
         if not check_password_hash(user.password_hash, nspace.payload["password"] + user.salt):
             return {"error": "Incorrect password"}, 401
-        user_data = {"username": user.username, "content_id": 1}
-        access_token = create_access_token(identity=user.id, additional_claims = user_data)
+        user_data = {"username": user.username, "content_id": 2}
+        access_token = create_access_token(identity=user, additional_claims = user_data)
         return {"access_token": access_token}
     
