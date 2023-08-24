@@ -1,11 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 const useFetch = (url, options) => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState();
   const [panding, setPanding] = useState(true);
   const [error, setError] = useState(false);
-  const [resOK, setResOK] = useState(null);
+  const [resOK, setResOK] = useState(false);
+  const fetchOptions = useMemo(() => options, [options]);
   useEffect(() => {
-    fetch(url, options)
+    fetch(url, fetchOptions)
       .then((res) => {
         setResOK(res.ok);
         if (!res.ok) {
@@ -23,7 +24,7 @@ const useFetch = (url, options) => {
         setPanding(false);
         setError(error.message);
       });
-  }, [url, options]);
+  }, [url, fetchOptions]);
 
   const fetchData = async (newUrl, newOptions) => {
     try {

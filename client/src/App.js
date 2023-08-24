@@ -1,23 +1,20 @@
-import Navbar from './Navbar';
-import Home from './Home';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Create from './Create';
-import BlogDetail from './BlogDetail';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Reset from "./pages/Reset";
 
 function App() {
+  
   return (
     <Router>
-      <div className="App">
-        <Navbar />
-        <div className="content">
-          <Routes>
-            <Route element={<Home />} exact path="/"></Route>
-            <Route element={<Create />} exact path="/create"></Route>
-            <Route element={<BlogDetail />} path="/blogs/:id"></Route>
-          </Routes>
-        </div>
-      </div>
-    </Router>
+    <Routes>
+      <Route element={<Home />} path="/" />
+      <Route element={<Login />} path="/login" />
+      <Route element={<Register />} path="/Register" />
+      <Route element={<Reset />} path="/Reset" />
+    </Routes>
+  </Router>
   );
 }
 

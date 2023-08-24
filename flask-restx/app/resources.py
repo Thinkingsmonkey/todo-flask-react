@@ -12,11 +12,7 @@ nspace = Namespace("api")
 @nspace.route("/test")
 class test(Resource):
     def get(self):
-        return {"member":[
-            "mamber1",
-            "member2",
-            "member3"
-        ]}, 403
+        return {"message": "login"}, 401
 
 @nspace.route("/hello")
 class Hello(Resource): # 繼承 Resource class
