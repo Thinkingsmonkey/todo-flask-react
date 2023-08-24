@@ -1,0 +1,57 @@
+.service {
+  &__title2 {
+    margin-bottom: $spacer * 1.5;
+  }
+  &__title3 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: $spacer * .5;
+  }
+  &__img {
+    width: 100px;
+    margin-bottom: $spacer;
+  }
+}
+
+
+.bg-co-branding {
+  background: url("https://github.com/hexschool/2022-web-layout-training/blob/main/week3-4/index-bg.png?raw=true") no-repeat center /  cover;
+}
+
+.co-branding {
+  .row {
+    padding: 0 12px;
+    .col-6 {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+}
+
+.recommend {
+  .card-text {
+    margin-bottom: 72px;
+  }
+}
+
+.contact {
+  &__descript {
+    font-size: 20px;
+  }
+  input, &__feedback-input {
+    text-indent: 12px;
+  }
+  &__feedback-input{
+    height: 136px;
+    resize: none;
+  }
+  @at-root .privacy__checkbox {
+    width: 20px;
+    margin: 0 6px;
+  } 
+  &__sendbtn{
+    width: 416px;
+    display: block;
+    margin: 0 auto;
+  }
+}

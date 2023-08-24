@@ -1,0 +1,22 @@
+.footer {
+  padding: 48px 0 32px 0;
+  .contactInfo{
+    padding-bottom: 32px;
+    border-bottom: 1px solid #fff;
+  }
+  .footer__copyright{
+    padding-top: 32px;
+  }
+  .socialMedia__img{
+    width: 48px;
+  }
+  .contactInfo {
+    &__icon{
+      font-size: 3rem;
+      margin-right: 22px;
+    }
+    &__text{
+      font-size: 36px;
+    }
+  }
+}

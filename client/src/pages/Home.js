@@ -6,7 +6,7 @@ import useLoginState from "../hook/useLoginState";
 
 function Home() {
   const url = "/api/test";
-  const login = useLoginState(url);
+  const [login, isPanding] = useLoginState(url);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,7 +17,12 @@ function Home() {
 
   return (
     <div>
-      {login && <Navbar />}
+      {isPanding ? (
+        <h2>Panding...</h2>
+      ) : (
+        login &&
+        <Navbar />
+      )}
     </div>
   );
 }
