@@ -3,11 +3,10 @@ import useFetch from "./useFetch";
 
 const Home = () => {
   const url = "http://localhost:8000/blogs";
-  const options = null;
-  const {data: blogs, panding, error} = useFetch(url, options)  
+  const {data: blogs, panding, error} = useFetch(url, null)
   return (
     <div className="home">
-      {error && <p>{error}</p>}
+      {error && <h2>{error}</h2>}
       {panding ? <p>Panding...</p> : <BlogList blogs={blogs} />}
     </div>
   );

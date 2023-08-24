@@ -1,24 +1,28 @@
 import { useState } from "react";
 import useFetch from "./useFetch";
-
+import { useNavigate } from "react-router-dom";
 const Create = () => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [author, setAuthor] = useState("yoshi");
-  const [panding, setPand] = useState(false);
-  const handleSubmit = (e) => {
+  const [panding, setPanding] = useState(false);
+  const url = "http://localhost:8000/blogs";
+  const { fetchData } = useFetch(url, null);
+  const navigate = useNavigate();
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const url = "http://localhost:8000/blogs";
+    setPanding(true);
     const blog = { title, body, author };
     const options = {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(blog)
-    }
-    const {resOK} = useFetch(url, options)
-    console.log(resOK);
+      body: JSON.stringify(blog),
+    };
+    const { panding: isPanding } = await fetchData(url, options);
+    setPanding(isPanding);
+    navigate("/")
   };
   return (
     <div className="create">
@@ -39,7 +43,7 @@ const Create = () => {
           <option value="mario">mario</option>
           <option value="yoshi">yoshi</option>
         </select>
-        {panding ? <button>Add Panding...</button> : <button>Add Blog</button>}
+          {panding ? <button>Add Panding...</button> : <button>Add Blog</button>}
       </form>
     </div>
   );
