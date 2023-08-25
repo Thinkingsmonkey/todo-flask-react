@@ -1,0 +1,10 @@
+.add-group {
+  width: 32rem;
+}
+.add-group__add-group__input {
+  width: 100%;
+  border: 2px solid transparent;
+}
+.add-group__add-group__input:focus {
+  border: 2px solid #444;
+}/*# sourceMappingURL=add.css.map */

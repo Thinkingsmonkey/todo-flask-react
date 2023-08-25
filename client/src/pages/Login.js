@@ -20,23 +20,45 @@ function Login() {
         <h2>Panding...</h2>
       ) : (
         !login && (
-          <div className="bg-[#F8F6FA]">
-            <div className="container  w-[28rem] h-screen mx-auto  flex items-center relative">
-              <div className="w-[28rem] h-[32rem] absolute top-[calc(50%-246px)] left-[10px] bg-blue-300 shadow-[0px_6px_12px_0_rgba(0,0,0,.12)]"></div>
-              <div className="w-[28rem] h-[32rem] absolute bg-white shadow-[6px_0px_12px_0_rgba(0,0,0,.12)]  flex flex-col justify-center items-center ">
-                <img src={logoImage} alt="" className="block w-14" />
-                <h2>login</h2>
-                <p>Sign in to your account</p>
-                <input type="text" placeholder="Username" />
-                <input type="text" placeholder="Password" />
-                <Link>
-                  <button className="bg-[#93BBF5]">Login</button>
+          <div className="bg-bg-primary">
+            <div className="login-container  justify-content-center align-items-center ">
+              <div className="card__shadow position-absolute bg-primary"></div>
+              <div className="card position-relative bg-white flex flex-col justify-content-center  align-items-center">
+                <img src={logoImage} alt="logo" className="mb-d75" />
+                <h2 className="card__title text-primary fw-bold ">Login</h2>
+                <p className="card__text mb-1d5 text-light">Sign in to your account</p>
+                <div className="card__field-group mb-1d5">
+                  <input
+                    className="card__input-field d-block w-100 py-1"
+                    type="text"
+                    placeholder="Username"
+                  />
+                  <div className="icon">
+                    <span class="material-symbols-outlined">person</span>
+                  </div>
+                </div>
+                <div className="card__field-group mb-1d5">
+                  <input
+                    className="card__input-field d-block w-100 py-1 "
+                    type="text"
+                    placeholder="Password"
+                  />
+                  <div className="icon">
+                    <span class="material-symbols-outlined">key</span>
+                  </div>
+                </div>
+                <Link to="/" className="w-100 text-center bg-primary py-1 mb-1">
+                  <p className="card__text text-white fw-bold">Login</p>
                 </Link>
-                <Link>
-                  <p className="text-base">Forgot Password? Click here to reset</p>
+                <Link to="/reset" className="mb-1">
+                  <p className="text-text">
+                    Forgot Password? Click here to reset
+                  </p>
                 </Link>
-                <Link>
-                  <button className="">Register New Account</button>
+                <Link to="/register" className="d-block w-100 text-center py-1  border border-2 border-text">
+                  <p className="card__text text-text fw-bold">
+                  Sign Up New Account
+                  </p>
                 </Link>
               </div>
             </div>

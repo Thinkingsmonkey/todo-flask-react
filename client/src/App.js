@@ -5,16 +5,15 @@ import Register from "./pages/Register";
 import Reset from "./pages/Reset";
 
 function App() {
-  
   return (
     <Router>
-    <Routes>
-      <Route element={<Home />} path="/" />
-      <Route element={<Login />} path="/login" />
-      <Route element={<Register />} path="/Register" />
-      <Route element={<Reset />} path="/Reset" />
-    </Routes>
-  </Router>
+      <Routes>
+        <Route element={<Home />} path="/" />
+        <Route element={<Login />} path="/login" />
+        <Route element={<Register />} path="/Register" />
+        <Route element={<Reset />} path="/Reset" />
+      </Routes>
+    </Router>
   );
 }
 

@@ -139,8 +139,11 @@ $utilities: map-merge(
       property: width,
       class: w,
       values: (
+        20: 20%,
         25: 25%,
+        30: 30%,
         50: 50%,
+        60: 60%,
         75: 75%,
         100: 100%,
         auto: auto

@@ -1,13 +1,18 @@
 // Home.js
 import { useEffect } from "react";
-import Navbar from "../components/Navbar";
+import Header from "../components/header/Header";
+import Main from "../components/Main/Main";
 import { useNavigate } from "react-router-dom";
-import useLoginState from "../hook/useLoginState";
+// import useLoginState from "../hook/useLoginState";
 
 function Home() {
-  const url = "/api/test";
-  const [login, isPanding] = useLoginState(url);
   const navigate = useNavigate();
+
+  //! 開發用記得刪除、重開
+  // const url = "/api/test";
+  // const [login, isPanding] = useLoginState(url);
+  let login = true;
+  let isPanding = false;
 
   useEffect(() => {
     if (login === false) {
@@ -20,8 +25,12 @@ function Home() {
       {isPanding ? (
         <h2>Panding...</h2>
       ) : (
-        login &&
-        <Navbar />
+        login && (
+          [
+            <Header />,
+            <Main />
+          ]
+        )
       )}
     </div>
   );

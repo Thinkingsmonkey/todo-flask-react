@@ -1,0 +1,12 @@
+.task-list {
+  flex-basis: 100%;
+}
+.task {
+  width: 20rem;
+ &__editImage {
+  margin-left: auto;
+ }
+ & img {
+  object-fit: contain;
+ }
+}

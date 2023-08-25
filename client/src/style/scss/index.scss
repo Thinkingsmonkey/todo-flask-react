@@ -3,16 +3,19 @@
 @import "helpers/variables";
 @import "helpers/mixins";
 
-@import "components/title";
-@import "components/section";
+// @import "components/section";
+@import "components/add"; 
+@import "components/filters"; 
+@import "components/tasklist"; 
+@import "components/edit"; 
 
 
 @import "base/reset";
 @import "base/base";
 
+@import "layout/nav";
 @import "layout/header";
-@import "layout/footer";
 
 @import "pages/home";
-@import "main";
+@import "pages/login";
 @import "mediaQuery";
