@@ -5,7 +5,7 @@ const Filters = () => {
   const factors = ["Today", "Priority", "Done"];
   const [activeFactor, setActiveFactor] = useState("Today");
   return ( 
-      <ul className='me-1d25 d-flex  gap-1d25 py-'>
+      <ul className='mb-1 me-1d25 d-flex  gap-1d25'>
         {factors.map((factor) => (
           <li  key={uuidv4()} >
             <Filter 

@@ -1,5 +1,28 @@
 from .extensions import db 
 import secrets
+from sqlalchemy import func
+from datetime import datetime, timedelta
+
+class Member(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(255), unique=True, nullable=False)
+    password = db.Column(db.String(500), nullable=False)
+    email = db.Column(db.String(255), unique=True, nullable=False)
+    tasks = db.relationship("Task", back_populates="member", cascade="all, delete-orphan")
+
+class Task(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    member_id = db.Column(db.Integer, db.ForeignKey("member.id"), nullable=False)
+    title = db.Column(db.String(255), nullable=False)
+    priority = db.Column(db.Enum('High', 'Medium', 'Low'))
+    state = db.Column(db.Enum('Todo', 'Doing', 'Done'))
+    start = db.Column(db.DateTime, server_default=func.current_timestamp())
+    deadline = db.Column(db.DateTime, default=datetime.now() + timedelta(days=1))
+    description = db.Column(db.Text)
+    member = db.relationship("Member", back_populates="tasks")
+
+
+
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)

@@ -1,18 +1,70 @@
 from flask_restx import Resource, Namespace
-from flask_jwt_extended import jwt_required, get_jwt_identity,create_access_token, current_user, get_jwt
+from flask_jwt_extended import jwt_required,create_access_token, get_jwt
 from werkzeug.security import generate_password_hash, check_password_hash
 from app import db
-from .api_models import course_model, student_model, course_input_model, student_input_model, login_model, user_model
-from .models import Course, Student, User, generate_salt
+from .api_models import *
+from .models import Course, Student, User, generate_salt, Member, Task
 
 
 # 類似 blueprint 設一個 url_prefix = "/api" 的意思
 nspace = Namespace("api")
 
-@nspace.route("/test")
-class test(Resource):
+@nspace.route("/tasks")
+class Tasks(Resource):
+    
+    @nspace.marshal_with(task_model)
     def get(self):
-        return {"message": "login"}, 401
+        tasks = Task.query.all()
+        return tasks
+    
+    @nspace.expect(task_model)
+    @nspace.marshal_with(task_model)
+    def post(self):
+        newTask = {
+            "member_id": nspace.payload.get("member_id"),
+            "title": nspace.payload.get("title"),
+            "priority": nspace.payload.get("priority"),
+            "state": nspace.payload.get("state"),
+            "start": nspace.payload.get("start"),
+            "deadline": nspace.payload.get("deadline"),
+            "description": nspace.payload.get("description")
+        }
+
+        task = Task(**newTask)
+        db.session.add(task)    # 將物件加入到資料庫會話中
+        db.session.commit()  
+        return task
+    
+
+@nspace.route("/test")
+class Test(Resource):
+
+    @nspace.marshal_list_with(member_model) 
+    def get(self):
+        task = Member(id=1, username="test", email="FFFFFF", password="test")
+        db.session.add(task)
+        db.session.commit()
+        return task
+    
+    @nspace.marshal_list_with(member_model) 
+    def post(self):
+        task = Task(member_id=1, title="test")
+        db.session.add(task)
+        db.session.commit()
+        return task
+    
+    # @nspace.marshal_list_with(task_model) 
+    # def get(self):
+    #     task = Task(member_id=1, title="test")
+    #     db.session.add(task)
+    #     db.session.commit()
+    #     return task
+    def delete(self):
+        id = 2
+        task = Task.query.get(id)
+        db.session.delete(task)
+        db.session.commit()
+        return {"message": "task delete complate"}, 204
 
 @nspace.route("/hello")
 class Hello(Resource): # 繼承 Resource class

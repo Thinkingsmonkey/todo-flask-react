@@ -8,10 +8,11 @@ from flask_cors import CORS
 def create_app():
     application = Flask(__name__)
     app = application
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db.sqlite3"
+    app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:12345678@localhost/todo"
+    # "sqlite:///db.sqlite3" sql url
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config["JWT_SECRET_KEY"] = "this secret key"
     app.config['JWT_ACCESS_TOKEN_EXPIRES'] = datetime.timedelta(minutes=60)
-
     api.init_app(app)
     db.init_app(app)
     jwt.init_app(app)

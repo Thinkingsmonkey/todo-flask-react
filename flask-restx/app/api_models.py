@@ -9,6 +9,25 @@ from .extensions import api
 #     # "students": fields.List(fields.Nested(student_model))
 # })
 
+member_model = api.model("Members", {
+    "id": fields.Integer,
+    "username": fields.String,
+    "email": fields.String
+})
+task_model = api.model("Tasks", {
+    "id": fields.Integer(required=False),
+    "member_id": fields.Integer,
+    "title": fields.String,
+    "priority": fields.String(required=False),
+    "state": fields.String(required=False),
+    "start": fields.DateTime(required=False),
+    "deadline": fields.DateTime(required=False),
+    "description": fields.String(required=False)
+})
+
+
+
+
 student_model = api.model("Student", {
     "id": fields.Integer,
     "name": fields.String,

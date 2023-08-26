@@ -3,10 +3,17 @@
 }
 .task {
   width: 20rem;
- &__editImage {
-  margin-left: auto;
- }
- & img {
-  object-fit: contain;
- }
+
+  &__editImage {
+    margin-left: auto;
+  }
+  & img {
+    object-fit: contain;
+  }
+}
+.cursor-default {
+  cursor: default;
+}
+.cursor-pointer {
+  cursor: pointer;
 }

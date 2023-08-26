@@ -1,10 +1,11 @@
 import Banner from "./Banner";
 import Navbar from "./Navbar";
-const Header = () => {
+const Header = ({ handleEdit }) => {
+
   return ( 
     <header className="bg-secondary">
       <Navbar />
-      <Banner /> 
+      <Banner handleEdit={handleEdit}/> 
     </header>
    );
 }
