@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import useLoginState from "../hook/useLoginState";
+import useLoginState from "../client/src/hook/useLoginState";
 import logoImage from "../images/logo.png";
 
 function Reset() {
@@ -34,7 +34,7 @@ function Reset() {
                     placeholder="Emain"
                   />
                   <div className="icon">
-                    <span class="material-symbols-outlined">email</span>
+                    <span className="material-symbols-outlined">email</span>
                   </div>
                 </div>
                 <div className="card__field-group mb-1d5">
@@ -44,7 +44,7 @@ function Reset() {
                     placeholder="New Password"
                   />
                   <div className="icon">
-                    <span class="material-symbols-outlined">key</span>
+                    <span className="material-symbols-outlined">key</span>
                   </div>
                 </div>
                 <div className="card__field-group mb-1d5">
@@ -54,7 +54,7 @@ function Reset() {
                     placeholder="New Password Again"
                   />
                   <div className="icon">
-                    <span class="material-symbols-outlined">key</span>
+                    <span className="material-symbols-outlined">key</span>
                   </div>
                 </div>
                 <Link to="/login" className="w-100 text-center bg-primary py-1 mb-1">

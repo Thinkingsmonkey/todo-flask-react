@@ -1,41 +1,75 @@
 import { useEffect, useState } from "react";
-const Edit = ({ taskInfo, setShowEdit }) => {
-  console.log(taskInfo.method);
+import { useAuth } from "../components/AuthContext";
+
+const Edit = ({ tasks, setTasks, taskInfo, setShowEdit }) => {
+  const { memberId } = useAuth();
+
   const [editedTaskInfo, setEditedTaskInfo] = useState({ ...taskInfo }); // 使用狀態來管理編輯後的任務資訊
+
   const handleChange = (propertyName, newValue) => {
     setEditedTaskInfo((preEditedTaskInfo) => ({
       ...preEditedTaskInfo,
       [propertyName]: newValue,
     }));
   };
+
   const handleAddTask = async () => {
-    const response = await fetch("/api/tasks", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json"
-      },
-      body: JSON.stringify({
-        member_id: 1,
-        title: "success"
-      })
-    });
-    // const response = await fetch("/api/tasks");
+    try {
+      if (editedTaskInfo.title === null || editedTaskInfo.title === "") {
+        throw new Error("Title should not be empty");
+      }
+      const newTaskInfo = {};
+      for (const key in editedTaskInfo) {
+        if (editedTaskInfo.hasOwnProperty(key)) {
+          newTaskInfo[key] =
+            editedTaskInfo[key] === "" ? null : editedTaskInfo[key];
+        }
+      }
 
-    const data = await response.json();
-    console.log(data);
-    setShowEdit(false)
-  };
-  const handleEditTask = () => {
-    setShowEdit(false)
+      const response = await fetch("/api/tasks", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({ ...newTaskInfo, member_id: memberId }),
+      });
+
+      const data = await response.json();
+      const newTasks = [...tasks, data];
+      setTasks(newTasks);
+      setShowEdit(false);
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
-  // ! 測試用記得刪除
-  useEffect(() => {
-    console.log(editedTaskInfo);
-  }, [editedTaskInfo]);
+  const handleEditTask = async () => {
+    try {
+      const response = await fetch("/api/tasks/" + editedTaskInfo.id, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(editedTaskInfo),
+      });
+      const data = await response.json();
+      
+      const newTasks = tasks.map((task) => {
+        if (task.id === data.id) return { ...task, ...data };
+        return task;
+      });
+      setTasks(newTasks);
+      if (!response.ok) throw new Error("delete dose not complate");
+    } catch (error) {
+      console.log(error.message);
+    }
+
+    setShowEdit(false);
+  };
+  const handleCloseEdit = (e) => {
+    if (!e.target.closest(".edit")) setShowEdit(false);
+  };
 
   return (
-    <div onClick={() => setShowEdit(false)} className="edit-container">
+    <div onClick={(e) => handleCloseEdit(e)} className="edit-container">
       <div className="container edit bg-white py-3d5 px-4d5 d-flex flex-column gap-1d25 text-filed">
         <div className="edit__head d-flex justify-content-between">
           <div className="edit__title w-100 ">
@@ -97,14 +131,14 @@ const Edit = ({ taskInfo, setShowEdit }) => {
         </div>
         <div className="edit__footer text-center ">
           <div className="edit__descript mb-1d25">
-            <h2 className="fw-bold text-start mb-d25">DESCRIPT</h2>
+            <h2 className="fw-bold text-start mb-d25">DESCRIPTION</h2>
             <textarea
               className="border border-2 border-filed rounded-pill w-100 p-1 pt-d5"
               cols="30"
               rows="10"
               placeholder="Your Task"
-              value={editedTaskInfo.descript}
-              onChange={(e) => handleChange("descript", e.target.value)}
+              value={editedTaskInfo.description}
+              onChange={(e) => handleChange("description", e.target.value)}
             ></textarea>
           </div>
           {taskInfo.method === "add" ? (

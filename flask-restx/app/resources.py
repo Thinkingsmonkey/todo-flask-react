@@ -9,8 +9,72 @@ from .models import Course, Student, User, generate_salt, Member, Task
 # 類似 blueprint 設一個 url_prefix = "/api" 的意思
 nspace = Namespace("api")
 
+@nspace.route("/member/register")
+class MemberRegisterAPI(Resource):
+    
+    @nspace.expect(member_input_model)
+    @nspace.marshal_with(member_output_model)
+    def post(self):
+        salt = generate_salt()
+        member = Member(username=nspace.payload["username"], email=nspace.payload["email"], password_hash=generate_password_hash(nspace.payload["password"]+ salt), salt=salt)
+        db.session.add(member)
+        db.session.commit()
+        return member, 201
+
+
+@nspace.route("/member/login")
+class MemberLoginAPI(Resource):
+    
+    @nspace.expect(member_login_model)
+    def post(self):
+        member = Member.query.filter_by(username=nspace.payload["username"]).first()
+        if not member:
+            return {"error": "User dose not exist"}, 401
+        if not check_password_hash(member.password_hash, nspace.payload["password"] + member.salt):
+            return {"error": "Incorrect password"}, 401
+        member_data = {"username": member.username, "id": member.id}
+        access_token = create_access_token(identity=member, additional_claims=member_data)
+        return {"access_token": access_token, "id": member.id}
+
+
+@nspace.route("/tasks/<int:id>")
+class TaskAPI(Resource):
+
+    def delete(self, id):
+        #! 可增加 error handle
+        task = Task.query.get(id)
+        db.session.delete(task)
+        db.session.commit()
+        return {}, 204
+    
+    @nspace.expect(task_update_model)
+    @nspace.marshal_with(task_model)
+    def put(self, id):
+        #! 可增加 error handle
+        task = Task.query.get(id)
+
+        newTask = {
+            "member_id": nspace.payload.get("member_id"),
+            "title": nspace.payload.get("title"),
+            "priority": nspace.payload.get("priority"),
+            "state": nspace.payload.get("state"),
+            "start": nspace.payload.get("start"),
+            "deadline": nspace.payload.get("deadline"),
+            "description": nspace.payload.get("description")
+        }
+        for key, value in newTask.items():
+            if value is not None:
+                setattr(task, key, value)
+        print(task.description)
+        db.session.commit()
+        # for key, value in task.items():
+        #     if value is None:
+        #         setattr(task, key, "")
+        return task, 200
+
+
 @nspace.route("/tasks")
-class Tasks(Resource):
+class TaskListAPI(Resource):
     
     @nspace.marshal_with(task_model)
     def get(self):
@@ -26,10 +90,10 @@ class Tasks(Resource):
             "priority": nspace.payload.get("priority"),
             "state": nspace.payload.get("state"),
             "start": nspace.payload.get("start"),
-            "deadline": nspace.payload.get("deadline"),
+            "deadline": nspace.payload.get("deadline"), # 預設的空字串(text 無法設定預設值)
             "description": nspace.payload.get("description")
         }
-
+        print(newTask, "92!!!!!")
         task = Task(**newTask)
         db.session.add(task)    # 將物件加入到資料庫會話中
         db.session.commit()  
@@ -39,19 +103,21 @@ class Tasks(Resource):
 @nspace.route("/test")
 class Test(Resource):
 
-    @nspace.marshal_list_with(member_model) 
-    def get(self):
-        task = Member(id=1, username="test", email="FFFFFF", password="test")
-        db.session.add(task)
-        db.session.commit()
-        return task
-    
-    @nspace.marshal_list_with(member_model) 
+    @nspace.marshal_list_with(member_output_model) 
+    @nspace.expect(member_login_model) 
     def post(self):
-        task = Task(member_id=1, title="test")
-        db.session.add(task)
+        member = Member(username=nspace.payload["username"], email=nspace.payload["email"], password_hash=nspace.payload["password"], salt=generate_salt())
+        db.session.add(member)
         db.session.commit()
-        return task
+        return member
+    
+
+    # @nspace.marshal_list_with(member_login_model) 
+    # def post(self):
+    #     task = Task(member_id=1, title="test")
+    #     db.session.add(task)
+    #     db.session.commit()
+    #     return task
     
     # @nspace.marshal_list_with(task_model) 
     # def get(self):

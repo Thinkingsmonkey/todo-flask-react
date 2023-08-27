@@ -19,6 +19,6 @@ CREATE TABLE task(
     state ENUM('Todo', 'Doing', 'Done') DEFAULT "Todo",
     start DATETIME DEFAULT CURRENT_TIMESTAMP,
     deadline DATETIME DEFAULT (NOW() + INTERVAL 1 DAY),
-    description TEXT,
+    description TEXT DEFAULT "",
     FOREIGN KEY (member_id) REFERENCES member(id) ON DELETE CASCADE
 );

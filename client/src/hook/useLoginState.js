@@ -12,7 +12,7 @@ const useLoginState = (url) => {
         return res.json();
       })
       .then((data) => {
-        setLogin(data.message === "login"); // 根据后端返回的数据判断是否登录
+        setLogin(data.message === "login"); 
       })
       .catch((error) => {
         setLogin(false);
