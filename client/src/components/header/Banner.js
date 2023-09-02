@@ -6,7 +6,14 @@ const Banner = ({ handleEdit, tasks, setTasks, setShowEdit }) => {
   const {memberId} = useAuth()
   const [title, setTitle] = useState(""); // 因為 react 需要設為空字串，所以判斷是否為空還需要另外寫
   const handleOpenEdit = () => {
-    handleEdit({ title, method: "add" });
+    handleEdit({ title, method: "add",
+        priority: "", // Explicitly set to null for fields not passed from frontend
+        state: "",
+        start: null,
+        deadline: null,
+        description: null,
+  
+  });
   };
   const handleAddTask = async () => {
     try {

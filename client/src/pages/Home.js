@@ -42,6 +42,11 @@ function Home(member_id) {
     }
   }, [isLoggedIn, navigate]);
 
+
+  const testFun = async () => {
+    const response = await fetch("/api/member/protected");
+    console.log(response.ok);
+  }
   return (
     <div>
       {isPanding ? (
@@ -49,6 +54,7 @@ function Home(member_id) {
       ) : (
         isLoggedIn && (
           <>
+            <button onClick={testFun}>test</button>
             <Header
               tasks={tasks}
               setTasks={setTasks}

@@ -3,9 +3,15 @@ import deleteImage from "../../images/delete.png";
 
 const Task = ({ task, handleEdit, tasks, setTasks }) => {
 
+  const getEditDateFormat = (taskDateFormat) => {
+    return taskDateFormat.slice(0, 10)
+  }
   const handleOpenEdit = () => {
     handleEdit({
-      ...task, method: "edit"
+      ...task, 
+      method: "edit",
+      start: getEditDateFormat(task.start),
+      deadline: getEditDateFormat(task.deadline),
     })
   }
   const handleDeleteEdit = async () => {
@@ -31,13 +37,13 @@ const Task = ({ task, handleEdit, tasks, setTasks }) => {
 
 
   return (
-    <div className="task border border-primary p-1">
+    <div className="task border border-primary p-1 d-flex flex-column ">
       <div className="task__header d-flex justify-content-between mb-1d25">
         <p className="task__priority btn cursor-default btn-primary rounded-pill px-2">{task.priority}</p>
         <p className="task__state btn cursor-default btn-secondary rounded-pill">{task.state}</p>
       </div>
       <div className="task__title fw-bold mb-1">{task.title}</div>
-      <div className="task__description mb-2">
+      <div className="task__description flex-grow-1">
         <h2 className="fw-400">Description:</h2>
         <div className="description__content lh-base">{task.description}</div>
       </div>

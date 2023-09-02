@@ -18,6 +18,8 @@ const Edit = ({ tasks, setTasks, taskInfo, setShowEdit }) => {
       if (editedTaskInfo.title === null || editedTaskInfo.title === "") {
         throw new Error("Title should not be empty");
       }
+
+      // 給後端正確的 空值
       const newTaskInfo = {};
       for (const key in editedTaskInfo) {
         if (editedTaskInfo.hasOwnProperty(key)) {

@@ -15,7 +15,7 @@ const TaskList = ({ handleEdit, tasks, setTasks }) => {
   return (
     <ul className="task-list pt-3d75 d-flex flex-wrap justify-content-md-between justify-content-center gap-2d25">
       {tasks.map((task) => (
-        <li key={uuidv4()}>
+        <li key={uuidv4()} className="d-flex">
           <Task tasks={tasks} setTasks={setTasks} handleEdit={handleEdit} task={task} />
         </li>
       ))}
