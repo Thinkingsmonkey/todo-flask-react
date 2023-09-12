@@ -34,10 +34,19 @@ const Task = ({ task, handleEdit, tasks, setTasks }) => {
     const formattedDeadline = `${(dateObj.getMonth() + 1).toString().padStart(2, '0')}.${dateObj.getDate().toString().padStart(2, '0')}`;
     return formattedDeadline;
   }
-
+  let borderColor = null;
+  if (task.priority === "Hight") {
+    borderColor = "border-red"
+  }
+  if (task.priority === "Medium") {
+    borderColor = "border-primary"
+  }
+  if (task.priority === "Low") {
+    borderColor = "border-filed"
+  }
 
   return (
-    <div className="task border border-primary p-1 d-flex flex-column ">
+    <div className={`task border p-1 d-flex flex-column border-3 rounded-2 ${borderColor}`}  >
       <div className="task__header d-flex justify-content-between mb-1d25">
         <p className="task__priority btn cursor-default btn-primary rounded-pill px-2">{task.priority}</p>
         <p className="task__state btn cursor-default btn-secondary rounded-pill">{task.state}</p>

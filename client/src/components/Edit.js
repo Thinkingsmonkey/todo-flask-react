@@ -6,10 +6,10 @@ const Edit = ({ tasks, setTasks, taskInfo, setShowEdit }) => {
 
   const [editedTaskInfo, setEditedTaskInfo] = useState({ ...taskInfo }); // 使用狀態來管理編輯後的任務資訊
 
-  const handleChange = (propertyName, newValue) => {
+  const handleChange = (e) => {
     setEditedTaskInfo((preEditedTaskInfo) => ({
       ...preEditedTaskInfo,
-      [propertyName]: newValue,
+      [e.target.name]: e.target.value,
     }));
   };
 
@@ -24,7 +24,7 @@ const Edit = ({ tasks, setTasks, taskInfo, setShowEdit }) => {
       for (const key in editedTaskInfo) {
         if (editedTaskInfo.hasOwnProperty(key)) {
           newTaskInfo[key] =
-            editedTaskInfo[key] === "" ? null : editedTaskInfo[key];
+          editedTaskInfo[key] === "" ? null : editedTaskInfo[key];
         }
       }
 
@@ -81,7 +81,8 @@ const Edit = ({ tasks, setTasks, taskInfo, setShowEdit }) => {
               placeholder="Your Task Title"
               type="text"
               value={editedTaskInfo.title}
-              onChange={(e) => handleChange("title", e.target.value)}
+              name="title"
+              onChange={(e) => handleChange(e)}
             />
           </div>
         </div>
@@ -91,7 +92,8 @@ const Edit = ({ tasks, setTasks, taskInfo, setShowEdit }) => {
             <select
               className=" border border-2 border-filed rounded-pill p-d5 w-100"
               value={editedTaskInfo.priority}
-              onChange={(e) => handleChange("priority", e.target.value)}
+              name="priority"
+              onChange={(e) => handleChange(e)}
             >
               <option value="High">High</option>
               <option value="Medium">Medium</option>
@@ -103,7 +105,8 @@ const Edit = ({ tasks, setTasks, taskInfo, setShowEdit }) => {
             <select
               className=" border border-2 border-filed rounded-pill p-d5 w-100"
               value={editedTaskInfo.state}
-              onChange={(e) => handleChange("state", e.target.value)}
+              name="state"
+              onChange={(e) => handleChange(e)}
             >
               <option value="Todo">Todo</option>
               <option value="Doing">Doing</option>
@@ -117,7 +120,8 @@ const Edit = ({ tasks, setTasks, taskInfo, setShowEdit }) => {
               placeholder="Select"
               type="date"
               value={editedTaskInfo.start}
-              onChange={(e) => handleChange("start", e.target.value)}
+              name="start"
+              onChange={(e) => handleChange(e)}
             />
           </div>
           <div className="edit__deadline w-45">
@@ -127,7 +131,8 @@ const Edit = ({ tasks, setTasks, taskInfo, setShowEdit }) => {
               placeholder="Select"
               type="date"
               value={editedTaskInfo.deadline}
-              onChange={(e) => handleChange("deadline", e.target.value)}
+              name="deadline"
+              onChange={(e) => handleChange(e)}
             />
           </div>
         </div>
@@ -140,7 +145,8 @@ const Edit = ({ tasks, setTasks, taskInfo, setShowEdit }) => {
               rows="10"
               placeholder="Your Task"
               value={editedTaskInfo.description}
-              onChange={(e) => handleChange("description", e.target.value)}
+              name="description"
+              onChange={(e) => handleChange(e)}
             ></textarea>
           </div>
           {taskInfo.method === "add" ? (

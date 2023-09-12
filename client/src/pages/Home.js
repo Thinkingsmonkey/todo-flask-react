@@ -20,7 +20,7 @@ function Home(member_id) {
   const [taskInfo, setTaskinfo] = useState({
     title: "",
     priority: "Medium",
-    state: "",
+    state: "Todo",
     start: "",
     deadline: "",
     description: "",
@@ -42,10 +42,16 @@ function Home(member_id) {
     }
   }, [isLoggedIn, navigate]);
 
-
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch("/api/tasks")
+      const data = await response.json()
+      setTasks(data)
+    }
+    fetchData()
+  },[])
   const testFun = async () => {
     const response = await fetch("/api/member/protected");
-    console.log(response.ok);
   }
   return (
     <div>

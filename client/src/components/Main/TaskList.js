@@ -1,20 +1,11 @@
 import { useEffect } from "react";
 import Task from "./Task";
 import { v4 as uuidv4 } from "uuid";
-const TaskList = ({ handleEdit, tasks, setTasks }) => {
+const TaskList = ({ handleEdit, tasks, setTasks, filterTasks }) => {
   
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch("/api/tasks")
-      const data = await response.json()
-      setTasks(data)
-    }
-    fetchData()
-  },[])
-
   return (
     <ul className="task-list pt-3d75 d-flex flex-wrap justify-content-md-between justify-content-center gap-2d25">
-      {tasks.map((task) => (
+      {filterTasks.map((task) => (
         <li key={uuidv4()} className="d-flex">
           <Task tasks={tasks} setTasks={setTasks} handleEdit={handleEdit} task={task} />
         </li>

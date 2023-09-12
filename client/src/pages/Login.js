@@ -27,7 +27,6 @@ function Login({ setLogin }) {
         }),
       });
       const data = await response.json();
-      console.dir(data);
       if (!response.ok) throw new Error(data.error)
       setIsPanding(false)
       memberIdSet(data.id)

@@ -1,13 +1,13 @@
 import Filter from './Filter'
 import { v4 as uuidv4 } from "uuid"
 import { useState } from "react"
-const Filters = ({ tasks, setTasks, showDoneTasks, setShowDoneTasks }) => {
-  const factors = ["Today", "Priority", "Done"];
+const Filters = ({ tasks, setTasks, showDoneTasks, setShowDoneTasks, setFilter }) => {
+  const factors = ["Today", "Priority", "Done", "All"];
   const [activeFactor, setActiveFactor] = useState("Today");
   return ( 
-      <ul className='mb-1 me-1d25 d-flex  gap-1d25'>
+      <ul className='filters mb-1 d-flex  gap-1d25 flex-wrap justify-content-center '>
         {factors.map((factor) => (
-          <li  key={uuidv4()} >
+          <li key={uuidv4()} >
             <Filter 
               active={activeFactor === factor}
               setActiveFactor={setActiveFactor}
@@ -16,6 +16,7 @@ const Filters = ({ tasks, setTasks, showDoneTasks, setShowDoneTasks }) => {
               setTasks={setTasks}
               showDoneTasks={showDoneTasks}
               setShowDoneTasks={setShowDoneTasks}
+              setFilter={setFilter}
               />
           </li>
         ))}
