@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid"
 import { useState } from "react"
 const Filters = ({ tasks, setTasks, showDoneTasks, setShowDoneTasks, setFilter }) => {
   const factors = ["Today", "Priority", "Done", "All"];
-  const [activeFactor, setActiveFactor] = useState("Today");
+  const [activeFactor, setActiveFactor] = useState("All");
   return ( 
       <ul className='filters mb-1 d-flex  gap-1d25 flex-wrap justify-content-center '>
         {factors.map((factor) => (

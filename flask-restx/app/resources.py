@@ -1,7 +1,7 @@
 from flask_restx import Resource, Namespace
 from flask_jwt_extended import create_access_token, set_access_cookies, unset_access_cookies
 from flask_jwt_extended import create_refresh_token, set_refresh_cookies, unset_refresh_cookies
-from flask_jwt_extended import get_jwt_identity, get_jwt
+from flask_jwt_extended import current_user, get_jwt
 from flask_jwt_extended import jwt_required
 from werkzeug.security import generate_password_hash, check_password_hash
 from app import db
@@ -19,6 +19,9 @@ class MemberRegisterAPI(Resource):
     @nspace.expect(member_input_model)
     @nspace.marshal_with(member_output_model)
     def post(self):
+        if Member.query.filter_by(username=nspace.payload["username"]).first():
+            response = {"message": "username has been used"}
+            return response, 401
         salt = generate_salt()
         password_hash = generate_password_hash(nspace.payload["password"]+ salt)
         member = Member(username=nspace.payload["username"], email=nspace.payload["email"], password_hash=password_hash, salt=salt)
@@ -104,10 +107,9 @@ class TaskListAPI(Resource):
             "priority": nspace.payload.get("priority"),
             "state": nspace.payload.get("state"),
             "start": nspace.payload.get("start"),
-            "deadline": nspace.payload.get("deadline"), # 預設的空字串(text 無法設定預設值)
-            "description": nspace.payload.get("description")
+            "deadline": nspace.payload.get("deadline"), 
+            "description": nspace.payload.get("description") # 前端若傳送預設的空字串(text 無法設定預設值)
         }
-        print(newTask, "92!!!!!")
         task = Task(**newTask)
         db.session.add(task)    # 將物件加入到資料庫會話中
         db.session.commit()  

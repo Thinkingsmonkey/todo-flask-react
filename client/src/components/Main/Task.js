@@ -35,20 +35,24 @@ const Task = ({ task, handleEdit, tasks, setTasks }) => {
     return formattedDeadline;
   }
   let borderColor = null;
-  if (task.priority === "Hight") {
+  let priorityBtnColor = null;
+  if (task.priority === "High") {
     borderColor = "border-red"
+    priorityBtnColor = "btn-red-btn"
   }
   if (task.priority === "Medium") {
-    borderColor = "border-primary"
+    borderColor = "border-yellow"
+    priorityBtnColor = "btn-yellow-btn"
   }
   if (task.priority === "Low") {
-    borderColor = "border-filed"
+    borderColor = "border-primary"
+    priorityBtnColor = "btn-primary"
   }
 
   return (
-    <div className={`task border p-1 d-flex flex-column border-3 rounded-2 ${borderColor}`}  >
+    <div className={`task border-top p-1 d-flex flex-column border-3 ${borderColor}`}  >
       <div className="task__header d-flex justify-content-between mb-1d25">
-        <p className="task__priority btn cursor-default btn-primary rounded-pill px-2">{task.priority}</p>
+        <p className={`task__priority btn cursor-default ${priorityBtnColor} rounded-pill px-2`}>{task.priority}</p>
         <p className="task__state btn cursor-default btn-secondary rounded-pill">{task.state}</p>
       </div>
       <div className="task__title fw-bold mb-1">{task.title}</div>

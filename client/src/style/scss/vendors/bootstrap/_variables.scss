@@ -40,9 +40,9 @@ $blue:    #0d6efd !default;
 $indigo:  #6610f2 !default;
 $purple:  #6f42c1 !default;
 $pink:    #d63384 !default;
-$red:     #dc3545 !default;
+$red:     #F68889 !default;
 $orange:  #fd7e14 !default;
-$yellow:  #ffc107 !default;
+$yellow:  #F8D48D !default;
 $green:   #198754 !default;
 $teal:    #20c997 !default;
 $cyan:    #0dcaf0 !default;
@@ -84,7 +84,11 @@ $theme-colors: (
   "primary":    $primary,
   "secondary":  $secondary,
   "filed":      #808080,
+  "red-btn":    #fdc9ca,
   "red":        $red,
+  "yellow":     $yellow,
+  "yellow-btn": #ffeac4,
+
   "text":       $text,
   "success":    $success,
   "info":       $info,
