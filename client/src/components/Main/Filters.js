@@ -1,7 +1,7 @@
 import Filter from './Filter'
 import { v4 as uuidv4 } from "uuid"
 import { useState } from "react"
-const Filters = ({ tasks, setTasks, showDoneTasks, setShowDoneTasks, setFilter }) => {
+const Filters = ({ setFilter }) => {
   const factors = ["Today", "Priority", "Done", "All"];
   const [activeFactor, setActiveFactor] = useState("All");
   return ( 
@@ -12,10 +12,6 @@ const Filters = ({ tasks, setTasks, showDoneTasks, setShowDoneTasks, setFilter }
               active={activeFactor === factor}
               setActiveFactor={setActiveFactor}
               factor={factor} 
-              tasks={tasks}
-              setTasks={setTasks}
-              showDoneTasks={showDoneTasks}
-              setShowDoneTasks={setShowDoneTasks}
               setFilter={setFilter}
               />
           </li>

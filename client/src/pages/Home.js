@@ -6,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 import Edit from "../components/Edit";
 import { useAuth } from "../components/AuthContext";
 
-function Home(member_id) {
-  const { isLoggedIn } = useAuth();
+function Home() {
+  const { isLoggedIn, memberId } = useAuth();
   const navigate = useNavigate();
 
   const [tasks, setTasks] = useState([]); // 監控 tasks 狀態
@@ -44,15 +44,14 @@ function Home(member_id) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("/api/tasks")
+      let url = `api/members/${memberId}/tasks`
+      const response = await fetch(url)
       const data = await response.json()
       setTasks(data)
     }
     fetchData()
   },[])
-  const testFun = async () => {
-    const response = await fetch("/api/member/protected");
-  }
+
   return (
     <div>
       {isPanding ? (
@@ -60,7 +59,6 @@ function Home(member_id) {
       ) : (
         isLoggedIn && (
           <>
-            <button onClick={testFun}>test</button>
             <Header
               tasks={tasks}
               setTasks={setTasks}
@@ -68,11 +66,9 @@ function Home(member_id) {
               setShowEdit={setShowEdit}
             />
             <Main
-              showDoneTasks={showDoneTasks}
-              setShowDoneTasks={setShowDoneTasks}
+              handleEdit={handleEdit}
               tasks={filteredTasks}
               setTasks={setTasks}
-              handleEdit={handleEdit}
             />
             {showEdit && (
               <Edit

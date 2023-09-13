@@ -1,7 +1,7 @@
 import editImage from "../../images/edit.png";
 import deleteImage from "../../images/delete.png";
 
-const Task = ({ task, handleEdit, tasks, setTasks }) => {
+const Task = ({ task, handleEdit, setTasks }) => {
 
   const getEditDateFormat = (taskDateFormat) => {
     return taskDateFormat.slice(0, 10)
@@ -20,7 +20,6 @@ const Task = ({ task, handleEdit, tasks, setTasks }) => {
       const response = await fetch("/api/tasks/" + task.id, {
         method: "DELETE"
       })
-      const status = response.status;
 
       if (!response.ok) throw new Error("delete dose not complate")
       setTasks(preTasks => preTasks.filter(item => item.id !== task.id))

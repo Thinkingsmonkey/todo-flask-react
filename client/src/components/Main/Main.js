@@ -5,8 +5,6 @@ const Main = ({
   handleEdit,
   tasks,
   setTasks,
-  showDoneTasks,
-  setShowDoneTasks,
 }) => {
   
   const [filter, setFilter] = useState(null);
@@ -41,15 +39,10 @@ const Main = ({
     <main className="bg-bg-primary main">
       <div className="container d-flex flex-wrap py-3d75 ">
         <Filters
-          showDoneTasks={showDoneTasks}
-          setShowDoneTasks={setShowDoneTasks}
-          tasks={tasks}
-          setTasks={setTasks}
           setFilter={setFilter}
         />
         <TaskList
           filterTasks={filterTasks}
-          tasks={tasks}
           setTasks={setTasks}
           handleEdit={handleEdit}
         />

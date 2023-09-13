@@ -1,6 +1,5 @@
-import { useEffect } from "react"
 
-const Filter = ({active, setActiveFactor, factor, key, tasks, setTasks, showDoneTasks, setShowDoneTasks, setFilter }) => {
+const Filter = ({active, setActiveFactor, factor, setFilter }) => {
   
   const handleActive = () => {
     setActiveFactor(factor)
@@ -8,7 +7,7 @@ const Filter = ({active, setActiveFactor, factor, key, tasks, setTasks, showDone
   }
 
   return ( 
-    <button onClick={handleActive} className={`filter ${active ? 'active' : ''}`} key={key}>
+    <button onClick={handleActive} className={`filter ${active ? 'active' : ''}`}>
       {factor}
     </button>
   );

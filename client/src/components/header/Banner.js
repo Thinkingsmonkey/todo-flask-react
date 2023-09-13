@@ -7,11 +7,11 @@ const Banner = ({ handleEdit, tasks, setTasks, setShowEdit }) => {
   const [title, setTitle] = useState(""); // 因為 react 需要設為空字串，所以判斷是否為空還需要另外寫
   const handleOpenEdit = () => {
     handleEdit({ title, method: "add",
-        priority: "", // Explicitly set to null for fields not passed from frontend
+        priority: "", //  因為 react 需要設為空字串，所以判斷是否為空還需要另外寫
         state: "",
-        start: null,
-        deadline: null,
-        description: null,
+        start: "",
+        deadline: "",
+        description: "",
   
   });
   };
@@ -21,7 +21,7 @@ const Banner = ({ handleEdit, tasks, setTasks, setShowEdit }) => {
       const requestData = {
         member_id: memberId,
         title: title,
-        priority: null, // Explicitly set to null for fields not passed from frontend
+        priority: null, // 要傳給後端無資料的要確實給 null
         state: null,
         start: null,
         deadline: null,
@@ -45,7 +45,7 @@ const Banner = ({ handleEdit, tasks, setTasks, setShowEdit }) => {
     }
   };
   return (
-    <div className="pb-3 d-block text-center mt-2">
+    <div className="banner pb-3 d-block text-center">
       <h1 className="fs-1 mb-1d5">Todo</h1>
       <div className="add-group">
         <input
